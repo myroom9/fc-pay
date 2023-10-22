@@ -1,0 +1,74 @@
+buildscript {
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.15.RELEASE"
+    }
+}
+
+plugins {
+    id 'com.palantir.docker' version '0.35.0'
+    id 'org.springframework.boot' version '2.7.15'
+    id 'java'
+}
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
+
+group = 'com.fastcampuspay.money'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.10'
+    testImplementation 'com.tngtech.archunit:archunit:1.0.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.jetbrains:annotations:23.0.0'
+
+    // implementation 'com.h2database:h2'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+
+
+    implementation project(path: ':common')
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+docker {
+    println(tasks.bootJar.outputs.files)
+
+    // 이미지 이름
+    name rootProject.name + '-' + project.name + ":" + version
+
+    // 어떤 dockerfile
+    dockerfile file('../Dockerfile')
+
+    // 어떤 파일들을 dockerfile에 복사할 것인가
+    files tasks.bootJar.outputs.files
+
+    // dockerfile에 전달할 인자
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+}
