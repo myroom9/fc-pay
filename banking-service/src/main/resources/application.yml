@@ -3,6 +3,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+service:
+  membership:
+    url: http://localhost:8081
+
 #  h2:
 #    console:
 #      enabled: true
