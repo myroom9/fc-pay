@@ -1,7 +1,7 @@
 package com.fastcampuspay.banking.application.port.in;
 
 import com.fastcampuspay.banking.domain.FirmbankingRequest;
-import common.UseCase;
+import com.fastcampuspay.common.UseCase;
 
 @UseCase
 public interface RequestFirmbankingUseCase {

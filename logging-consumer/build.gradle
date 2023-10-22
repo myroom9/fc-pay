@@ -2,27 +2,13 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
-apply plugin: 'com.palantir.docker'
-
-group = 'com.fastcampus.membership'
+group = 'com.fastcampuspay.logging-consumer'
 version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+
+apply plugin: 'com.palantir.docker'
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'javax.persistence:javax.persistence-api:2.2'
-    implementation 'org.jetbrains:annotations:23.0.0'
-
-    // implementation 'com.h2database:h2'
-    implementation 'mysql:mysql-connector-java:8.0.33'
-
-
     implementation project(path: ':common')
 
     testImplementation platform('org.junit:junit-bom:5.9.1')

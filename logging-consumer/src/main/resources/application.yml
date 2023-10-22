@@ -1,0 +1,10 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+#kafka:
+#  clusters:
+#    bootstrapservers: 123
+#
+#logging.topic: test

@@ -3,9 +3,8 @@ package com.fastcampuspay.moneyservice.adapter.out.persistence;
 import com.fastcampuspay.moneyservice.application.port.out.IncreaseMoneyPort;
 import com.fastcampuspay.moneyservice.domain.MemberMoney;
 import com.fastcampuspay.moneyservice.domain.MoneyChangingRequest;
-import common.PersistenceAdapter;
+import com.fastcampuspay.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
 import java.util.List;

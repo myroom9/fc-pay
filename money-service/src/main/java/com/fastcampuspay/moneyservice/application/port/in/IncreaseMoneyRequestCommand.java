@@ -1,11 +1,10 @@
 package com.fastcampuspay.moneyservice.application.port.in;
 
-import common.SelfValidating;
+import com.fastcampuspay.common.SelfValidating;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data

@@ -4,7 +4,7 @@ package com.fastcampuspay.banking.adapter.in.web;
 import com.fastcampuspay.banking.application.port.in.RegisterBankAccountCommand;
 import com.fastcampuspay.banking.application.port.in.RegisterBankAccountUseCase;
 import com.fastcampuspay.banking.domain.RegisteredBankAccount;
-import common.WebAdapter;
+import com.fastcampuspay.common.WebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class RegisteredBankAccountController {
     private final RegisterBankAccountUseCase registerBankAccountUseCase;
 
     @PostMapping("/banking/account/register")
-    public RegisteredBankAccount registerMembership(@RequestBody RegisteredBankAccountRequest request) {
+    public RegisteredBankAccount registerBankAccount(@RequestBody RegisteredBankAccountRequest request) {
         RegisterBankAccountCommand command = RegisterBankAccountCommand.builder()
                 .membershipId(request.getMembershipId())
                 .bankName(request.getBankName())

@@ -1,7 +1,7 @@
 package com.fastcampuspay.moneyservice.application.port.in;
 
 import com.fastcampuspay.moneyservice.domain.MoneyChangingRequest;
-import common.UseCase;
+import com.fastcampuspay.common.UseCase;
 
 @UseCase
 public interface IncreaseMoneyRequestUseCase {
