@@ -1,0 +1,44 @@
+plugins {
+    id 'com.palantir.docker' version '0.35.0'
+}
+
+apply plugin: 'com.palantir.docker'
+
+group = 'com.fastcampuspay.taskconsumer'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.jetbrains:annotations:23.0.0'
+
+    implementation project(path: ':common')
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+docker {
+    println(tasks.bootJar.outputs.files)
+
+    // 이미지 이름
+    name rootProject.name + '-' + project.name + ":" + version
+
+    // 어떤 dockerfile
+    dockerfile file('../Dockerfile')
+
+    // 어떤 파일들을 dockerfile에 복사할 것인가
+    files tasks.bootJar.outputs.files
+
+    // dockerfile에 전달할 인자
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+}
