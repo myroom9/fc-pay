@@ -16,7 +16,8 @@ public class FirmbankingRequestMapper {
                 new FirmbankingRequest.ToBankAccountNumber(firmbankingRequestJpaEntity.getToBankAccountNumber()),
                 new FirmbankingRequest.MoneyAmount(firmbankingRequestJpaEntity.getMoneyAmount()),
                 new FirmbankingRequest.FirmbankingStatus(firmbankingRequestJpaEntity.getFirmbankingStatus()),
-                uuid
+                uuid,
+                new FirmbankingRequest.FirmbankingAggregateIdentifier(firmbankingRequestJpaEntity.getAggregateIdentifier())
         );
     }
 }

@@ -35,7 +35,9 @@ public class FirmbankingRequestJpaEntity {
 
     private UUID uuid;
 
-    public FirmbankingRequestJpaEntity(String fromBankName, String fromBankAccountNumber, String toBankName, String toBankAccountNumber, int moneyAmount, int firmbankingStatus, UUID uuid) {
+    private String aggregateIdentifier;
+
+    public FirmbankingRequestJpaEntity(String fromBankName, String fromBankAccountNumber, String toBankName, String toBankAccountNumber, int moneyAmount, int firmbankingStatus, UUID uuid, String aggregateIdentifier) {
         this.fromBankName = fromBankName;
         this.fromBankAccountNumber = fromBankAccountNumber;
         this.toBankName = toBankName;
@@ -43,11 +45,12 @@ public class FirmbankingRequestJpaEntity {
         this.moneyAmount = moneyAmount;
         this.firmbankingStatus = firmbankingStatus;
         this.uuid = uuid;
+        this.aggregateIdentifier = aggregateIdentifier;
     }
 
     @Override
     public String toString() {
-        return "RequestFirmbankingJpaEntity{" +
+        return "FirmbankingRequestJpaEntity{" +
                 "requestFirmbankingId=" + requestFirmbankingId +
                 ", fromBankName='" + fromBankName + '\'' +
                 ", fromBankAccountNumber='" + fromBankAccountNumber + '\'' +
@@ -55,6 +58,8 @@ public class FirmbankingRequestJpaEntity {
                 ", toBankAccountNumber='" + toBankAccountNumber + '\'' +
                 ", moneyAmount=" + moneyAmount +
                 ", firmbankingStatus=" + firmbankingStatus +
+                ", uuid=" + uuid +
+                ", aggregateIdentifier='" + aggregateIdentifier + '\'' +
                 '}';
     }
 }
