@@ -22,14 +22,17 @@ public class MemberMoneyJpaEntity {
 
     private int balance;
 
+    private String aggregateIdentifier;
+
     public MemberMoneyJpaEntity(Long memberMoneyId, Long memberId, int balance) {
         this.memberMoneyId = memberMoneyId;
         this.memberId = memberId;
         this.balance = balance;
     }
 
-    public MemberMoneyJpaEntity(Long memberId, int balance) {
+    public MemberMoneyJpaEntity(Long memberId, int balance, String aggregateIdentifier) {
         this.memberId = memberId;
         this.balance = balance;
+        this.aggregateIdentifier = aggregateIdentifier;
     }
 }

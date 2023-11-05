@@ -1,6 +1,8 @@
 package com.fastcampuspay.moneyservice.adapter.in.web;
 
 
+import com.fastcampuspay.moneyservice.application.port.in.CreateMemberMoneyCommand;
+import com.fastcampuspay.moneyservice.application.port.in.CreateMemberMoneyUseCase;
 import com.fastcampuspay.moneyservice.application.port.in.IncreaseMoneyRequestCommand;
 import com.fastcampuspay.moneyservice.application.port.in.IncreaseMoneyRequestUseCase;
 import com.fastcampuspay.moneyservice.domain.MoneyChangingRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestMoneyChangingController {
 
     private final IncreaseMoneyRequestUseCase increaseMoneyRequestUseCase;
+    private final CreateMemberMoneyUseCase createMemberMoneyUseCase;
 
     @PostMapping("/money/increase")
     MoneyChangingResultDetail increaseMoneyChangingRequest(@RequestBody IncreaseMoneyChangingRequest request) {
@@ -67,4 +70,18 @@ public class RequestMoneyChangingController {
         return moneyChangingResultDetail;
     }
 
+    @PostMapping(path = "/money/create-member-money")
+    void createMemberMoney(@RequestBody CreateMemberMoneyRequest request) {
+        createMemberMoneyUseCase.createMemberMoney(CreateMemberMoneyCommand.builder().membershipId(request.getTargetMembershipId()).build());
+    }
+
+    @PostMapping(path = "/money/increase-eda")
+    void increaseMoneyChangingRequestByEvent(@RequestBody IncreaseMoneyChangingRequest request) {
+        IncreaseMoneyRequestCommand command = IncreaseMoneyRequestCommand.builder()
+                .targetMembershipId(request.getTargetMembershipId())
+                .amount(request.getAmount())
+                .build();
+
+        increaseMoneyRequestUseCase.increaseMoneyRequestByEvent(command);
+    }
 }
