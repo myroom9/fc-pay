@@ -28,21 +28,25 @@ public class RegisteredBankAccountJpaEntity {
 
     private boolean linkedStatusIsValid;
 
-    public RegisteredBankAccountJpaEntity(String membershipId, String bankName, String bankAccountNumber, boolean linkedStatusIsValid) {
+    private String aggregateIdentifier;
+
+    public RegisteredBankAccountJpaEntity(String membershipId, String bankName, String bankAccountNumber, boolean linkedStatusIsValid, String aggregateIdentifier) {
         this.membershipId = membershipId;
         this.bankName = bankName;
         this.bankAccountNumber = bankAccountNumber;
         this.linkedStatusIsValid = linkedStatusIsValid;
+        this.aggregateIdentifier = aggregateIdentifier;
     }
 
     @Override
     public String toString() {
-        return "RegisterBankAccountJpaEntity{" +
+        return "RegisteredBankAccountJpaEntity{" +
                 "registeredBankAccountId=" + registeredBankAccountId +
                 ", membershipId='" + membershipId + '\'' +
                 ", bankName='" + bankName + '\'' +
                 ", bankAccountNumber='" + bankAccountNumber + '\'' +
                 ", linkedStatusIsValid=" + linkedStatusIsValid +
+                ", aggregateIdentifier='" + aggregateIdentifier + '\'' +
                 '}';
     }
 }

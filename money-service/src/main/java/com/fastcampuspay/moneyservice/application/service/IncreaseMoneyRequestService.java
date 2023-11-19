@@ -5,6 +5,8 @@ import com.fastcampuspay.common.RechargingMoneyTask;
 import com.fastcampuspay.common.SubTask;
 import com.fastcampuspay.moneyservice.adapter.axon.command.IncreaseMemberMoneyCommand;
 import com.fastcampuspay.moneyservice.adapter.axon.command.MemberMoneyCreatedCommand;
+import com.fastcampuspay.moneyservice.adapter.axon.command.RechargingMoneyRequestCreateCommand;
+import com.fastcampuspay.moneyservice.adapter.axon.event.RechargingRequestCreatedEvent;
 import com.fastcampuspay.moneyservice.adapter.out.persistence.MemberMoneyJpaEntity;
 import com.fastcampuspay.moneyservice.adapter.out.persistence.MoneyChangingRequestMapper;
 import com.fastcampuspay.moneyservice.application.port.in.*;
@@ -156,7 +158,27 @@ public class IncreaseMoneyRequestService implements IncreaseMoneyRequestUseCase,
 
     @Override
     public void increaseMoneyRequestByEvent(IncreaseMoneyRequestCommand command) {
+
         MemberMoneyJpaEntity memberMoneyJpaEntity = getMemberMoneyPort.getMemberMoney(
+                new MemberMoney.MembershipId(command.getTargetMembershipId()));
+        String memberMoneyAggregateIdentifier = memberMoneyJpaEntity.getAggregateIdentifier();
+
+        // saga의 시작을 나타내는 커맨드
+        commandGateway.send(new RechargingMoneyRequestCreateCommand(
+                memberMoneyAggregateIdentifier,
+                UUID.randomUUID().toString(),
+                command.getTargetMembershipId(),
+                command.getAmount())
+        ).whenComplete((result, throwable) -> {
+            if (throwable != null) {
+                System.out.println("throwable = " + throwable);
+                throw new RuntimeException(throwable);
+            }
+
+            System.out.println("result = " + result);
+        });
+
+        /*MemberMoneyJpaEntity memberMoneyJpaEntity = getMemberMoneyPort.getMemberMoney(
                 new MemberMoney.MembershipId(command.getTargetMembershipId()));
 
         String aggregateIdentifier = memberMoneyJpaEntity.getAggregateIdentifier();
@@ -176,6 +198,6 @@ public class IncreaseMoneyRequestService implements IncreaseMoneyRequestUseCase,
                     System.out.println("increase money request result = " + result);
                     increaseMoneyPort.increaseMoney(new MemberMoney.MembershipId(command.getTargetMembershipId()), command.getAmount());
 
-                });
+                });*/
     }
 }

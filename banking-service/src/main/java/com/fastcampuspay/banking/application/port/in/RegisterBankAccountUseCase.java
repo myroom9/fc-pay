@@ -7,5 +7,6 @@ import com.fastcampuspay.common.UseCase;
 public interface RegisterBankAccountUseCase {
 
     RegisteredBankAccount registerMBankAccount(RegisterBankAccountCommand command);
+    void registerMBankAccountByEvent(RegisterBankAccountCommand command);
 
 }

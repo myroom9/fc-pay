@@ -2,8 +2,12 @@ package com.fastcampuspay.moneyservice.adapter.axon.agreegate;
 
 import com.fastcampuspay.moneyservice.adapter.axon.command.IncreaseMemberMoneyCommand;
 import com.fastcampuspay.moneyservice.adapter.axon.command.MemberMoneyCreatedCommand;
+import com.fastcampuspay.moneyservice.adapter.axon.command.RechargingMoneyRequestCreateCommand;
 import com.fastcampuspay.moneyservice.adapter.axon.event.IncreaseMemberMoneyEvent;
 import com.fastcampuspay.moneyservice.adapter.axon.event.MemberMoneyCreatedEvent;
+import com.fastcampuspay.moneyservice.adapter.axon.event.RechargingRequestCreatedEvent;
+import com.fastcampuspay.moneyservice.application.port.out.GetRegisteredBankAccountPort;
+import com.fastcampuspay.moneyservice.application.port.out.RegisteredBankAccountAggregateIdentifier;
 import lombok.Data;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -40,6 +44,29 @@ public class MemberMoneyAggregate {
 
         apply(new IncreaseMemberMoneyEvent(id, command.getMembershipId(), command.getAmount()));
         return id;
+    }
+
+    @CommandHandler
+    public void handler(RechargingMoneyRequestCreateCommand command, GetRegisteredBankAccountPort getRegisteredBankAccountPort) {
+        System.out.println("RechargingMoneyRequestCreateCommand Handler");
+
+        id = command.getAggregateIdentifier();
+
+        // saga start
+        // new RechargingRequestCreatedEvent
+        // banking 정보가 필요함
+        RegisteredBankAccountAggregateIdentifier registeredBankAccountIdentifier =
+                getRegisteredBankAccountPort.getRegisteredBankAccount(command.getMembershipId());
+
+        // saga start
+        apply(new RechargingRequestCreatedEvent(
+                command.getRechargingRequestId(),
+                command.getMembershipId(),
+                command.getAmount(),
+                registeredBankAccountIdentifier.getAggregateIdentifier(),
+                registeredBankAccountIdentifier.getBankName(),
+                registeredBankAccountIdentifier.getBankAccountNumber()
+        ));
     }
 
     @EventSourcingHandler
