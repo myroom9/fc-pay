@@ -1,11 +1,11 @@
-package com.fastcampuspay.banking;
+package com.fastcampus.payment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BankingApplication {
+public class PaymentApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BankingApplication.class, args);
+        SpringApplication.run(PaymentApplication.class, args);
     }
 }

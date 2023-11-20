@@ -1,4 +1,4 @@
-package com.fastcampus.payment.adapter.in.web;
+package com.fastcampus.payment.application.port.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,13 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentRequest {
+public class RequestPaymentCommand {
+
     private String membershipId;
     private String requestPrice;
     private String franchiseId;
     private String franchiseFeeRate;
     // private int paymentStatus;
     // private Date approvedAt;
+
 }
